@@ -1,0 +1,81 @@
+{
+  "env": {
+    "PYTHONUTF8": "1",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "NUMEXPR_NUM_THREADS": "4"
+  },
+  "permissions": {
+    "deny": ["Edit(raw/**)"]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$CLAUDE_PROJECT_DIR\" python -I \"$CLAUDE_PROJECT_DIR/tools/autopilot.py\" hook session-start",
+            "timeout": 60
+          }
+        ],
+        "matcher": "startup"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$CLAUDE_PROJECT_DIR\" python -I \"$CLAUDE_PROJECT_DIR/tools/autopilot.py\" hook session-end",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-bare-python.js\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/steer-to-tools.js\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$CLAUDE_PROJECT_DIR\" python -I \"$CLAUDE_PROJECT_DIR/tools/autopilot.py\" hook pre-write",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --project \"$CLAUDE_PROJECT_DIR\" python -I \"$CLAUDE_PROJECT_DIR/tools/autopilot.py\" hook post-edit",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

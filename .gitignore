@@ -1,0 +1,36 @@
+# 含 HackMD API token
+.mcp.json
+mcp.json
+
+# 本機權限設定
+.claude/settings.local.json
+
+# Obsidian 本機設定
+.obsidian/
+
+# App 私有資料、抽取暫存、lint 報告
+.llm-wiki/
+.vault-meta/
+
+# 原始資料（著作權與檔案大小考量，另外備份）
+raw/
+
+# 個人 HackMD 筆記（已在 HackMD 上，只保留說明文件）
+hackmd_note/**
+!hackmd_note/**/
+!hackmd_note/README.md
+
+# Python
+.venv/
+__pycache__/
+
+
+# 簡報（/wiki-slides）：只有 outline.md 進 git，.pptx 與檢查用的匯出圖可以重新產生
+slides/**/*.pptx
+slides/**/render/
+slides/**/*.pdf
+# 參考講義與原型（著作權考量，只在本機）
+slides/reference/
+
+# pytest
+.pytest_cache/

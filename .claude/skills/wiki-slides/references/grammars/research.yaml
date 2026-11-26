@@ -1,0 +1,30 @@
+# 講課結構的頁型表（論文講課）。tools/slides_grammar.py 讀這個檔案；
+# 大綱 frontmatter 寫 `文法: research` 時才套用。說明見 ../slide-grammar.md。
+name: research
+
+# 章內有先後順序的頁型：後面的頁型不可以出現在前面的頁型之前；每一型都可以跳過。
+order: [problem, quantify, observation, insight, method, steps, result, limitation]
+
+# 一章講好幾個方法元件時，可以在這段範圍內回到開頭再走一輪
+# （method → result → method → result）；超出範圍（例如 limitation 之後）仍然不可倒退。
+repeat: [method, result]
+
+# 視同另一個頁型來排順序。
+same_as:
+  ablation: result
+  generalization: result
+
+# 章內任何位置都可以出現，不受順序限制。
+free: [spotlight, figure, prior, headline, motivation, background]
+
+# 章的第一頁只能是這些頁型。
+opening: [roadmap, divider]
+
+# 第一章之前可以出現的頁型。
+head: [cover, motivation, roadmap, background, figure]
+
+# 最後一章之後可以出現的頁型；summary 之後只能接 appendix。
+tail: [summary, appendix]
+
+# 不必附出處的頁型（封面版型本來就不必）。
+no_source: [cover, roadmap, divider]
